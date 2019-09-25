@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 
 // import Header from './navigation/Header'
-import { CURRENT_USER } from "./const";
+import { CURRENT_USER, GET_USER } from "./const";
 import Content from "./Content";
 import Footer from "./navigation/Footer";
 import Nav from "./navigation/Nav";
@@ -29,8 +29,6 @@ class App extends Component<{}, IAppState> {
         isVendor: false,
         lastname: "",
         password: "",
-        favoriteWorks: [{postId: '', artistId: '' }],
-        favoriteArtists: []
       },
       userAddress: {
         city: "",
@@ -77,8 +75,6 @@ class App extends Component<{}, IAppState> {
           isVendor: response.data.user.isVendor,
           lastname: response.data.userlastname,
           password: response.data.user.password,
-          favoriteWorks: [{postId: response.data.user.favoriteWorks, artistId: response.data.user.favoriteArtists }],
-          favoriteArtists: []
         },
       };
       if (response.data.user.isVendor) {
@@ -111,8 +107,6 @@ class App extends Component<{}, IAppState> {
           isVendor: false,
           lastname: "",
           password: "",
-          favoriteWorks: [{postId: '', artistId: '' }],
-          favoriteArtists: []
         },
       };
       return state;
@@ -128,6 +122,9 @@ class App extends Component<{}, IAppState> {
         headers: { "Authorization": `Bearer ${token}` },
       })
         .then((response) => {
+          axios.get(GET_USER(this.state.user.id))
+          .then()
+          .catch()
           const user = this.makeUserStateObject(response)
           console.log(user);
           this.setState(user);
