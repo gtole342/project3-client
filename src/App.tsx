@@ -63,21 +63,20 @@ class App extends Component<{}, IAppState> {
 
   makeUserStateObject = (response: AxiosResponse | undefined) => {
     if (response) {
-      console.log(response.data.user)
       const state: IAppState = {
         user: {
-          email: response.data.user.email,
-          favoriteArtists: response.data.user.favoriteArtists,
-          favoriteWorks: response.data.user.favoriteWorks,
-          firstname: response.data.user.firstname,
-          id: response.data.user._id,
+          email: response.data.email,
+          favoriteArtists: response.data.favoriteArtists,
+          favoriteWorks: response.data.favoriteWorks,
+          firstname: response.data.firstname,
+          id: response.data._id,
           isLoggedIn: true,
-          isVendor: response.data.user.isVendor,
-          lastname: response.data.userlastname,
-          password: response.data.user.password,
+          isVendor: response.data.isVendor,
+          lastname: response.data.lastname,
+          password: response.data.password,
         },
       };
-      if (response.data.user.isVendor) {
+      if (response.data.vendor) {
         state.userAddress = {
           city: response.data.vendor.city,
           country: response.data.vendor.country,
@@ -118,16 +117,20 @@ class App extends Component<{}, IAppState> {
     const token = localStorage.getItem("mernToken");
     // If theres a token, try to use it ot get the user info
     if (token) {
+      console.log("here")
       axios.get(CURRENT_USER, {
         headers: { "Authorization": `Bearer ${token}` },
       })
         .then((response) => {
-          axios.get(GET_USER(this.state.user.id))
-          .then()
-          .catch()
-          const user = this.makeUserStateObject(response)
-          console.log(user);
-          this.setState(user);
+          console.log(response)
+          axios.get(GET_USER(response.data.user._id))
+          .then((response) => {
+            console.log(response)
+            const user = this.makeUserStateObject(response)
+            console.log("USer",user);
+            this.setState(user);
+          })
+          .catch();
         })
         .catch((err) => {
           console.log("Error with token", err);

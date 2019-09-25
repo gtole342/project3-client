@@ -89,6 +89,7 @@ class Signup extends React.Component<ISignupProps, ISignupState> {
 
   handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(this.state)
     fetch(SIGNUP, {
       body: JSON.stringify(this.state),
       headers: {
