@@ -71,15 +71,9 @@ class App extends Component<{}, IAppState> {
           firstname: response.data.firstname,
           id: response.data._id,
           isLoggedIn: true,
-<<<<<<< HEAD
           isVendor: response.data.isVendor,
           lastname: response.data.lastname,
           password: response.data.password,
-=======
-          isVendor: response.data.user.isVendor,
-          lastname: response.data.userlastname,
-          password: response.data.user.password,
->>>>>>> 20f3536003249bb5c1e4350d5f2f25d67a30e922
         },
       };
       if (response.data.vendor) {
